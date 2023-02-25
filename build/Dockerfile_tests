@@ -1,0 +1,14 @@
+FROM golang:1.19 as build
+
+ENV BIN_FILE /opt/tests
+ENV CODE_DIR /go/src
+
+WORKDIR ${CODE_DIR}
+
+COPY ./internal/server/api.go ${CODE_DIR}/internal/server/
+COPY ./integration-tests ${CODE_DIR}/integration-tests
+
+COPY ./go.mod .
+RUN go mod tidy
+
+WORKDIR integration-tests
